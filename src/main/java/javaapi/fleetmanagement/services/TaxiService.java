@@ -3,17 +3,18 @@ package javaapi.fleetmanagement.services;
 import javaapi.fleetmanagement.models.TaxiModel;
 import javaapi.fleetmanagement.repositories.TaxiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TaxiService {
     @Autowired
     TaxiRepository taxiRepository;
 
-    public ArrayList<TaxiModel> getTaxis(){
-        return (ArrayList<TaxiModel>) taxiRepository.findAll();
+    public Page<TaxiModel> getTaxis(Pageable pageable){
+        return taxiRepository.findAll(pageable);
     }
 
 //    public TaxiModel saveTaxi(TaxiModel taxi){
