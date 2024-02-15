@@ -13,6 +13,13 @@ public class TaxiModel {
     private Integer id;
     private String plate;
 
+    public TaxiModel() {
+    }
+
+    public TaxiModel(Integer id, String plate) {
+        this.id = id;
+        this.plate = plate;
+    }
 
     public Integer getId() {
         return id;
