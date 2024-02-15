@@ -1,8 +1,5 @@
 package javaapi.fleetmanagement.controllers;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import javaapi.fleetmanagement.controllers.TaxiController;
 import javaapi.fleetmanagement.models.TaxiModel;
 import javaapi.fleetmanagement.services.TaxiService;
 import org.junit.jupiter.api.BeforeEach;
