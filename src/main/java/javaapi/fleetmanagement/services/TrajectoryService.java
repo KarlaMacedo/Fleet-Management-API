@@ -2,18 +2,23 @@ package javaapi.fleetmanagement.services;
 
 import javaapi.fleetmanagement.models.TrajectoryModel;
 import javaapi.fleetmanagement.repositories.TrajectoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class TrajectoryService {
+    private final TrajectoryRepository trajectoryRepository;
 
-    @Autowired
-    private TrajectoryRepository trajectoryRepository;
+    public TrajectoryService(TrajectoryRepository trajectoryRepository) {
+        this.trajectoryRepository = trajectoryRepository;
+    }
 
-    public Page<TrajectoryModel> getTaxiLocations(Integer taxiId, String date, Pageable pageable) {
+    public Page<TrajectoryModel> getByTaxiIdAndDate(int taxiId, String dateString, Pageable pageable) {
+        LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return trajectoryRepository.findByTaxiIdAndDate(taxiId, date, pageable);
     }
 }

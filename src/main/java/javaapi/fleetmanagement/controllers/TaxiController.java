@@ -22,9 +22,4 @@ public class TaxiController {
         return taxiService.getTaxis(pageable);
     }
 
-//    @PostMapping()
-//    public TaxiModel saveTaxi(@RequestBody TaxiModel taxi){
-//        return this.taxiService.saveTaxi(taxi);
-//    }
-
 }

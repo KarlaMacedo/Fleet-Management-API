@@ -1,44 +1,48 @@
 package javaapi.fleetmanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import org.hibernate.type.descriptor.jdbc.TimestampWithTimeZoneJdbcType;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "trajectories")
 public class TrajectoryModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name= "taxi_id", referencedColumnName = "id")
+    @JoinColumn(name = "taxi_id", nullable = false)
+    @JsonIgnoreProperties("trajectories")
     private TaxiModel taxi;
 
-    private OffsetDateTime date;
+    @Column(name = "date")
+    private LocalDate date;
 
-    private Double latitude;
+    private double latitude;
 
-    private Double longitude;
+    private double longitude;
 
     public TrajectoryModel() {
     }
 
-    public TrajectoryModel(Integer id, TaxiModel taxi, OffsetDateTime date, Double latitude, Double longitude) {
+    public TrajectoryModel(int id, TaxiModel taxi, LocalDate dateTime, double latitude, double longitude) {
         this.id = id;
         this.taxi = taxi;
-        this.date = date;
+        this.date = dateTime;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -50,28 +54,27 @@ public class TrajectoryModel {
         this.taxi = taxi;
     }
 
-    public OffsetDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(OffsetDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }
