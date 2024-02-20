@@ -22,7 +22,7 @@ public class TrajectoryController {
     }
 
     @GetMapping("/{taxiId}")
-    public ResponseEntity<List<TrajectoryModel>> getByTaxiIdAndDate(
+    public ResponseEntity<Page<TrajectoryModel>> getByTaxiIdAndDate(
             @PathVariable int taxiId,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
             @RequestParam(defaultValue = "0") int page,
@@ -31,6 +31,6 @@ public class TrajectoryController {
         Pageable pageable = PageRequest.of(page, size);
         String dateString = date == null ? null : date.toString();
         Page<TrajectoryModel> trajectories = trajectoryService.getByTaxiIdAndDate(taxiId, dateString, pageable);
-        return ResponseEntity.ok(trajectories.getContent());
+        return ResponseEntity.ok(trajectories);
     }
 }
