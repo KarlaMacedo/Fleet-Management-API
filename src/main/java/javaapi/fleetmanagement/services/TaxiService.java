@@ -17,7 +17,4 @@ public class TaxiService {
         return taxiRepository.findAll(pageable);
     }
 
-//    public TaxiModel saveTaxi(TaxiModel taxi){
-//        return taxiRepository.save(taxi);
-//    }
 }
