@@ -3,35 +3,56 @@ package javaapi.fleetmanagement.services;
 import javaapi.fleetmanagement.models.TrajectoryModel;
 import javaapi.fleetmanagement.repositories.TrajectoryRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 
 @SpringBootTest
 public class TrajectoryServiceTest {
-    @Mock
+
+    @MockBean
     private TrajectoryRepository trajectoryRepository;
 
+    @Autowired
+    private TrajectoryService trajectoryService;
+
     @Test
-    void testGetTrajectoriesByIdAndDate() {
-        LocalDate date = LocalDate.parse("2024-02-20", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Pageable pageable = PageRequest.of(0,10, Sort.by("id").ascending());
-        TrajectoryModel trajectoryModel = new TrajectoryModel(1, null, date, 0.0, 0.0);
-        Page<TrajectoryModel> expectedPage = new PageImpl<>(Collections.singletonList(trajectoryModel), pageable, 1);
+    public void testGetByTaxiIdAndDate_shouldReturnEmptyPage_whenNoDataFound() {
+        Page<TrajectoryModel> emptyPage = Page.empty();
+        when(trajectoryRepository.findByTaxiIdAndDate(anyInt(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(emptyPage);
 
-        when(trajectoryRepository.findByTaxiIdAndDate(1, date, pageable)).thenReturn(expectedPage);
+        int taxiId = 123;
+        String dateString = "2023-12-31";
+        Page<TrajectoryModel> trajectories = trajectoryService.getByTaxiIdAndDate(taxiId, dateString, Pageable.ofSize(10));
 
-        TrajectoryService trajectoryService = new TrajectoryService(trajectoryRepository);
-        Page<TrajectoryModel> actualPage = trajectoryService.getByTaxiIdAndDate(1, "2024-02-20", pageable);
+        assertEquals(trajectories.getContent(), Collections.emptyList());
+    }
 
-        assertEquals(expectedPage, actualPage);
+    @Test
+    public void testGetByTaxiIdAndDate_shouldReturnData_whenDataExists() {
+        List<TrajectoryModel> mockData = Collections.singletonList(new TrajectoryModel());
+        Page<TrajectoryModel> mockPage = new PageImpl<>(mockData);
+        when(trajectoryRepository.findByTaxiIdAndDate(anyInt(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(mockPage);
 
+        int taxiId = 456;
+        String dateString = "2024-02-22";
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<TrajectoryModel> trajectories = trajectoryService.getByTaxiIdAndDate(taxiId, dateString, pageable);
+
+        assertEquals(trajectories.getContent(), mockData);
     }
 }
