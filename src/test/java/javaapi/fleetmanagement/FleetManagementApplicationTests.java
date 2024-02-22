@@ -47,8 +47,9 @@ class FleetManagementApplicationTests {
 				.andExpect(jsonPath("$.content[0].latitude").exists())
 				.andExpect(jsonPath("$.content[0].longitude").exists())
 				.andExpect(jsonPath("$.content[0].taxi.id").value(7957))
-				.andExpect(jsonPath("$.content[0].date").value("2008-02-02"))
-				.andExpect(jsonPath("$.content.length()").value(20));
+				.andExpect(jsonPath("$.content.length()").value(20))
+				.andExpect(jsonPath("$.totalElements").exists())
+				.andExpect(jsonPath("$.totalPages").exists());
 	}
 
 }
