@@ -21,7 +21,7 @@ public class TrajectoryModel {
     private TaxiModel taxi;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime date;
 
     private double latitude;
 
@@ -30,7 +30,7 @@ public class TrajectoryModel {
     public TrajectoryModel() {
     }
 
-    public TrajectoryModel(int id, TaxiModel taxi, LocalDate dateTime, double latitude, double longitude) {
+    public TrajectoryModel(int id, TaxiModel taxi, LocalDateTime dateTime, double latitude, double longitude) {
         this.id = id;
         this.taxi = taxi;
         this.date = dateTime;
@@ -54,11 +54,11 @@ public class TrajectoryModel {
         this.taxi = taxi;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

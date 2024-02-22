@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -19,6 +21,8 @@ public class TrajectoryService {
 
     public Page<TrajectoryModel> getByTaxiIdAndDate(int taxiId, String dateString, Pageable pageable) {
         LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return trajectoryRepository.findByTaxiIdAndDate(taxiId, date, pageable);
+        LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
+        return trajectoryRepository.findByTaxiIdAndDate(taxiId, startOfDay, endOfDay, pageable);
     }
 }
