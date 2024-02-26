@@ -1,7 +1,6 @@
 package javaapi.fleetmanagement.services;
 
 import javaapi.fleetmanagement.models.LastLocationDTO;
-import javaapi.fleetmanagement.models.TrajectoryModel;
 import javaapi.fleetmanagement.repositories.LastLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
