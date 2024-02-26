@@ -1,5 +1,6 @@
 package javaapi.fleetmanagement;
 
+import javaapi.fleetmanagement.repositories.LastLocationRepository;
 import javaapi.fleetmanagement.repositories.TaxiRepository;
 import javaapi.fleetmanagement.repositories.TrajectoryRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -52,4 +53,22 @@ class FleetManagementApplicationTests {
 				.andExpect(jsonPath("$.totalPages").exists());
 	}
 
+	@Autowired
+	private LastLocationRepository lastLocationRepository;
+
+	@Test
+	@DisplayName("TestThirdEndPoint")
+	void testLastLocationsEndpoint() throws Exception {
+		mockMvc.perform(get("/trajectories/lastLocations?page=0&size=10"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.content").isArray())
+				.andExpect(jsonPath("$.content.length()").value(10))
+				.andExpect(jsonPath("$.content[0].id").exists())
+				.andExpect(jsonPath("$.content[0].plate").exists())
+				.andExpect(jsonPath("$.content[0].timestamp").exists())
+				.andExpect(jsonPath("$.content[0].latitude").exists())
+				.andExpect(jsonPath("$.content[0].longitude").exists())
+				.andExpect(jsonPath("$.totalElements").exists())
+				.andExpect(jsonPath("$.totalPages").exists());
+	}
 }
