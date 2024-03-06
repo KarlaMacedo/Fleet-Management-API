@@ -24,7 +24,7 @@ class FleetManagementApplicationTests {
 	private TaxiRepository taxiRepository;
 
 	@Test
-	@DisplayName("TestFirstEndPoint")
+	@DisplayName("TestFirstEndPoint-taxis")
 	void testFirstEndPointContextLoads() throws Exception {
 		mockMvc.perform(get("/taxi?page=0&size=10")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").isArray())
@@ -37,7 +37,7 @@ class FleetManagementApplicationTests {
 	private TrajectoryRepository trajectoryRepository;
 
 	@Test
-	@DisplayName("TestSecondEndPoint")
+	@DisplayName("TestSecondEndPoint-trajectories")
 	void testSecondEndPointContextLoads() throws Exception {
 		mockMvc.perform(get("/trajectory/7957?date=2008-02-02&page=0&size=20")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").isArray())
@@ -57,7 +57,7 @@ class FleetManagementApplicationTests {
 	private LastLocationRepository lastLocationRepository;
 
 	@Test
-	@DisplayName("TestThirdEndPoint")
+	@DisplayName("TestThirdEndPoint-lastLocations")
 	void testLastLocationsEndpoint() throws Exception {
 		mockMvc.perform(get("/trajectories/lastLocations?page=0&size=10"))
 				.andExpect(status().isOk())
