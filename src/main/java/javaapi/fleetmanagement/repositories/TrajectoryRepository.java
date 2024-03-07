@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 //MÉTODOS PARA INTERACTUAR CON LA BD
 @Repository// indica que la interfaz es un componente de Spring que manejará la interacción con la BD
-public interface TrajectoryRepository extends PagingAndSortingRepository<TrajectoryModel, Integer> {
+public interface TrajectoryRepository extends PagingAndSortingRepository<TrajectoryModel, Integer> {//extiende la interfaz para tener métodos para realizar operaciones CRUD y paginación
 
     //define consulta nativa de SQL personalizada para buscar trayectorias por taxiId y periodo de tiempo Y las cuenta
     @Query(value = "SELECT * FROM trajectories WHERE taxi_id = ?1 AND date BETWEEN ?2 AND ?3",

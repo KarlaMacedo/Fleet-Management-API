@@ -10,14 +10,19 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-@Service
+//ENCAPSULA LA LÓGICA
+@Service//indica que esta clase es un servicio de Spring
 public class LastLocationService {
-    @Autowired
+    @Autowired //inyecta instancia de repository
     private LastLocationRepository lastLocationRepository;
 
-    public Page<LastLocationDTO> getLatestTrajectories(Pageable pageable) {
+    public Page<LastLocationDTO> getLatestTrajectories(Pageable pageable) {//define un método para obtener una lista paginada de ultima ubicación
+        //busca ultimas ubicaciones paginadas con método del repository
         Page<Object[]> lastTrajectories = lastLocationRepository.findLastTrajectories(pageable);
-        lastTrajectories.forEach(row -> System.out.println(Arrays.toString(row)));
+
+        //lastTrajectories.forEach(row -> System.out.println(Arrays.toString(row)));
+
+        // Mapea cada una, las convierte en un objeto LastLocationDTO y las devuelve paginadas
         return lastTrajectories.map(row -> new LastLocationDTO(
                 (Integer) row[0], // id
                 (String) row[1], // plate
@@ -27,3 +32,4 @@ public class LastLocationService {
         ));
     }
 }
+//Service -> Repository
