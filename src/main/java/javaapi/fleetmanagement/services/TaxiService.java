@@ -8,13 +8,17 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
 
-@Service
+//ENCAPSULA LA LÓGICA
+@Service //indica que esta clase es un servicio de Spring
 public class TaxiService {
-    @Autowired
+    @Autowired //inyecta instancia de repository
     TaxiRepository taxiRepository;
 
-    public Page<TaxiModel> getTaxis(Pageable pageable){
+    public Page<TaxiModel> getTaxis(Pageable pageable){//define un método para obtener una lista paginada de taxis
+
+        //utiliza el método findAll del repositorio para obtener una página de objetos TaxiModel
         return taxiRepository.findAll(pageable);
     }
-
 }
+
+//Service -> Repository

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class LastLocationServiceTest {
 
-    @Mock
+    @Mock //simula clases o interfaces
     private LastLocationRepository lastLocationRepository;
 
     @InjectMocks

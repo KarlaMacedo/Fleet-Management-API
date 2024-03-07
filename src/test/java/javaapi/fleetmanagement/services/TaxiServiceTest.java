@@ -15,22 +15,22 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest // indica que esta es una prueba de integración completa de Spring Boot
 public class TaxiServiceTest {
-    @Autowired
+    @Autowired //inicializa el service
     private TaxiService taxiService;
 
     @MockBean
     private TaxiRepository taxiRepository;
 
     @Test
-    void testGetTaxis() {
+    void testGetTaxis() { //verifica el comportamiento del método getTaxis() del service
         List<TaxiModel> taxis = new ArrayList<>();
         taxis.add(new TaxiModel(1, "ABCD-1234"));
         taxis.add(new TaxiModel(2, "EFGH-5678"));
 
         Page<TaxiModel> page = new PageImpl<>(taxis);
-        Pageable pageable = Pageable.unpaged();
+        Pageable pageable = Pageable.unpaged(); //lista completa de resultados sin paginación
 
         when(taxiRepository.findAll(pageable)).thenReturn(page);
 
