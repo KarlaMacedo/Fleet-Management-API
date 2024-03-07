@@ -5,10 +5,11 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
-@Entity
+//DTO (objeto de transferencia de datos)
+@Entity//marca la clase como una entidad almacenable en la BD
 public class LastLocationDTO {
 
-    @Id
+    @Id//marca el id como primary key
     private Integer id;
     private String plate;
     private LocalDateTime timestamp;

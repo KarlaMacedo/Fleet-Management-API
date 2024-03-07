@@ -7,20 +7,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
-@Table(name = "trajectories")
+//REPRESENTA UNA TABLA EN LA BD
+@Entity// indica que la clase es una entidad JPA (Java Persistence API) que se mapeará una tabla en de la BD
+@Table(name = "trajectories")// nombre de la tabla de la BD
 public class TrajectoryModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id//marca el id como primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // indica que el id se generará automáticamente por la estrategia de BD identidad
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "taxi_id", nullable = false)
-    @JsonIgnoreProperties("trajectories")
+    @ManyToOne //indica relación de muchos a uno con TaxiModel
+    @JoinColumn(name = "taxi_id", nullable = false) // columna externa a unir
+    @JsonIgnoreProperties("trajectories") // ignorar propiedad trajectories al serializar/deserializar objetos TaxiModel
     private TaxiModel taxi;
 
-    @Column(name = "date")
+    @Column(name = "date")//config de la columna
     private LocalDateTime date;
 
     private double latitude;

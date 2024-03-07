@@ -7,8 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-@NonNullApi
-public interface TaxiRepository extends PagingAndSortingRepository<TaxiModel, Integer> {
-    Page<TaxiModel> findAll(Pageable pageable);
+//MÉTODOS PARA INTERACTUAR CON LA BD
+@Repository // indica que la interfaz es un componente de Spring que manejará la interacción con la BD
+@NonNullApi // indica que ningun elemento puede ser nulo
+public interface TaxiRepository extends PagingAndSortingRepository<TaxiModel, Integer> { //extiende la interfaz para tener métodos para realizar operaciones CRUD y paginación
+    Page<TaxiModel> findAll(Pageable pageable); //página de objetos TaxiModel
 }
+
+//Repository -> Finally Controller Response

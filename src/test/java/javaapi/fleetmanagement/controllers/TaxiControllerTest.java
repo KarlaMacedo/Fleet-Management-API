@@ -20,17 +20,17 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebMvcTest(TaxiController.class)
+@WebMvcTest(TaxiController.class) //indica que es una prueba específica de un controlador web de Spring
 class TaxiControllerTest {
 
-    @Autowired
+    @Autowired //inicializa el controlador
     private TaxiController taxiController;
 
-    @MockBean
+    @MockBean //simula componentes de Spring
     private TaxiService taxiService;
 
-    @BeforeEach
-    public void init() {
+    @BeforeEach //se ejecuta antes de cada prueba
+    public void init() { //configura el mock sel service
         List<TaxiModel> taxis = new ArrayList<>();
         taxis.add(new TaxiModel(1, "ABCD-1234"));
         taxis.add(new TaxiModel(2, "EFGH-5678"));
@@ -40,7 +40,7 @@ class TaxiControllerTest {
     }
 
     @Test
-    public void testGetTaxis() {
+    public void testGetTaxis() { //verifica el comportamiento del método getTaxis() del controller
         Page<TaxiModel> result = taxiController.getTaxis(0, 10);
 
         assertEquals(2, result.getTotalElements());

@@ -21,26 +21,27 @@ import java.util.Collections;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(TrajectoryController.class)
+@ExtendWith(SpringExtension.class)//habilita la integración de Spring con las pruebas JUnit
+@WebMvcTest(TrajectoryController.class) //indica que es una prueba específica de un controlador web de Spring
 public class TrajectoryControllerTest {
 
-    @Autowired
+    @Autowired // inyecta instancia MockMvc para simular solicitudes HTTP y verificar el comportamiento de controladores
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockBean//simula componentes de Spring
     private TrajectoryService trajectoryService;
 
     @Test
-    public void testGetByTaxiIdAndDate() throws Exception {
+    public void testGetByTaxiIdAndDate() throws Exception {// verifica que el controller maneje correctamente una solicitud GET
         int taxiId = 1;
         LocalDate date = LocalDate.of(2024, 2, 22);
         Page<TrajectoryModel> expectedPage = new PageImpl<>(Collections.emptyList());
+        //llamando al service con los parametros correctos
         when(trajectoryService.getByTaxiIdAndDate(taxiId, date.toString(), Pageable.unpaged())).thenReturn(expectedPage);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/trajectory/{taxiId}", taxiId)
                         .param("date", date.toString())
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk()); //y se espera una respuesta exitosa
     }
 }
