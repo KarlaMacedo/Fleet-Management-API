@@ -32,15 +32,16 @@ public class TrajectoryControllerTest {
     private TrajectoryService trajectoryService;
 
     @Test
-    public void testGetByTaxiIdAndDate() throws Exception {// verifica el comportamiento del método getByTaxiIdAndDate() del controlador
+    public void testGetByTaxiIdAndDate() throws Exception {// verifica que el controller maneje correctamente una solicitud GET
         int taxiId = 1;
         LocalDate date = LocalDate.of(2024, 2, 22);
         Page<TrajectoryModel> expectedPage = new PageImpl<>(Collections.emptyList());
+        //llamando al service con los parametros correctos
         when(trajectoryService.getByTaxiIdAndDate(taxiId, date.toString(), Pageable.unpaged())).thenReturn(expectedPage);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/trajectory/{taxiId}", taxiId)
                         .param("date", date.toString())
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk()); //y se espera una respuesta exitosa
     }
 }
