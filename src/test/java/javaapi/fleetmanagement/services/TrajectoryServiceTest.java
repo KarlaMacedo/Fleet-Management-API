@@ -21,17 +21,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 
-@SpringBootTest
+@SpringBootTest// indica que esta es una prueba de integración completa de Spring Boot
 public class TrajectoryServiceTest {
 
-    @MockBean
+    @MockBean//simula componentes de Spring
     private TrajectoryRepository trajectoryRepository;
 
-    @Autowired
+    @Autowired//inicializa service
     private TrajectoryService trajectoryService;
 
     @Test
-    public void testGetByTaxiIdAndDate_shouldReturnEmptyPage_whenNoDataFound() {
+    public void testGetByTaxiIdAndDate_shouldReturnEmptyPage_whenNoDataFound() {//verifica el comportamiento del método getByTaxiIdAndDate() del service cuando no se encuentra ningún dato
         Page<TrajectoryModel> emptyPage = Page.empty();
         when(trajectoryRepository.findByTaxiIdAndDate(anyInt(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(emptyPage);
 
@@ -39,11 +39,11 @@ public class TrajectoryServiceTest {
         String dateString = "2023-12-31";
         Page<TrajectoryModel> trajectories = trajectoryService.getByTaxiIdAndDate(taxiId, dateString, Pageable.ofSize(10));
 
-        assertEquals(trajectories.getContent(), Collections.emptyList());
+        assertEquals(trajectories.getContent(), Collections.emptyList()); //Se espera que devuelva una página vacía
     }
 
     @Test
-    public void testGetByTaxiIdAndDate_shouldReturnData_whenDataExists() {
+    public void testGetByTaxiIdAndDate_shouldReturnData_whenDataExists() {//verifica el comportamiento del método getByTaxiIdAndDate() del service cuando se encuentra un dato
         List<TrajectoryModel> mockData = Collections.singletonList(new TrajectoryModel());
         Page<TrajectoryModel> mockPage = new PageImpl<>(mockData);
         when(trajectoryRepository.findByTaxiIdAndDate(anyInt(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(mockPage);
@@ -53,6 +53,6 @@ public class TrajectoryServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
         Page<TrajectoryModel> trajectories = trajectoryService.getByTaxiIdAndDate(taxiId, dateString, pageable);
 
-        assertEquals(trajectories.getContent(), mockData);
+        assertEquals(trajectories.getContent(), mockData); //Se espera que devuelva una página que contiene los datos encontrados
     }
 }

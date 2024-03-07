@@ -20,7 +20,7 @@ public class TaxiServiceTest {
     @Autowired //inicializa el service
     private TaxiService taxiService;
 
-    @MockBean
+    @MockBean//simula componentes de Spring
     private TaxiRepository taxiRepository;
 
     @Test
